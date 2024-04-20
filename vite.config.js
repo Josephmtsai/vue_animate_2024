@@ -4,4 +4,5 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 
 export default defineConfig({
   plugins: [vue(), vueJsx()],
+  base: process.env.NODE_ENV === 'production' ? '/vue_animate_2024/' : '/',
 });
