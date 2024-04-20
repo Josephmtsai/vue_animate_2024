@@ -1,7 +1,17 @@
-# Vue 3 + Vite
+# Github Pages Setting
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+1. Page Setup default Branch
 
-## Recommended IDE Setup
+2. Vite Deploy need add related folder
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+```
+export default defineConfig({
+  plugins: [vue(), vueJsx()],
+  base: process.env.NODE_ENV === 'production' ? '/vue_animate_2024/' : '/',
+});
+
+```
+
+3. Github Token add into Secrets
+
+4. Workflow Permission change into _Read and write permissions_
