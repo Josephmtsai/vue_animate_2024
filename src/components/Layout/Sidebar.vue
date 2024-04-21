@@ -2,10 +2,10 @@
   <div
     ref="target"
     :class="{
-      'translate-x-0': props.isOpen,
-      'translate-x-full': !props.isOpen,
+      'animate-slide-in': props.isOpen,
+      'animate-slide-out': !props.isOpen && !props.isMdScreen,
     }"
-    class="fixed sm:relative z-30 h-full md:h-auto bg-gray-800 w-64 transition-transform duration-1000 right-0"
+    class="fixed sm:relative z-30 h-full md:h-auto bg-gray-800 w-64 right-0"
   >
     <h2 class="text-white text-lg p-4">Menu</h2>
     <div class="p-5">
