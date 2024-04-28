@@ -22,7 +22,15 @@
           <div
             v-if="n === 1"
             ref="circle"
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center z-10"
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center z-10"
+          >
+            0
+          </div>
+
+          <div
+            v-if="n === 7"
+            ref="circle2"
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center z-10"
           >
             0
           </div>
@@ -35,7 +43,7 @@
       v-if="isOpen || isMdScreen"
       :isMdScreen="isMdScreen"
       :isOpen="isOpen"
-      @update:isOpen="isOpen = false"
+      @close="isOpen = false"
     />
   </div>
 </template>
@@ -47,14 +55,14 @@ import { useMediaQuery, useResizeObserver } from '@vueuse/core';
 import { gsap } from 'gsap';
 const isOpen = ref(false);
 const isMdScreen = useMediaQuery('(min-width: 568px)');
+
 function isBlinking(index: number) {
   return [3, 5, 9].includes(index);
 }
-function isCorner(index: number) {
-  return [0, 2, 6, 8].includes(index);
-}
 const circle = ref(null);
+const circle2 = ref(null);
 const gridItem = ref(null);
+
 const setGridItemRef = (el) => {
   if (el) gridItem.value = el;
 };
@@ -64,24 +72,26 @@ onMounted(async () => {
   if (gridItem.value) {
     useResizeObserver(gridItem, ([entry]) => {
       const gridWidth = entry.contentRect.width;
-      animate(gridWidth);
+      animate(circle.value, gridWidth);
+      animate(circle2.value, gridWidth);
     });
   }
 });
-function animate(gridWidth: number) {
-  gsap.to(circle.value, {
+
+function animate(element: any, gridWidth: number) {
+  gsap.to(element, {
     x: gridWidth * 2,
     duration: 2,
     ease: 'none',
     onComplete: () => {
-      gsap.to(circle.value, {
+      gsap.to(element, {
         x: gridWidth * 3,
         opacity: 0,
         duration: 2,
         delay: 0.5,
         onComplete: () => {
-          gsap.set(circle.value, { x: '0%', opacity: 1 });
-          animate(gridWidth);
+          gsap.set(element, { x: '0%', opacity: 1 });
+          animate(element, gridWidth);
         },
       });
     },
